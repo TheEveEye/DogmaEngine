@@ -11,7 +11,7 @@ import Foundation
 let PENALTY_FACTOR: Double = 0.8691199808003974
 
 // Operators that incur stacking penalty
-let OPERATOR_HAS_PENALTY: [EffectOperator] = [
+nonisolated(unsafe) let OPERATOR_HAS_PENALTY: [EffectOperator] = [
     .preMul,
     .postMul,
     .postPercent,

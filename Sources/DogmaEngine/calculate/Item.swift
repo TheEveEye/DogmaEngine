@@ -7,8 +7,8 @@
 
 import Foundation
 
-enum EffectCategory: Int, Codable, Comparable, CaseIterable {
-    static func < (lhs: EffectCategory, rhs: EffectCategory) -> Bool {
+public enum EffectCategory: Int, Codable, Comparable, CaseIterable {
+    public static func < (lhs: EffectCategory, rhs: EffectCategory) -> Bool {
         lhs.rawValue < rhs.rawValue
     }
     
@@ -31,8 +31,8 @@ enum EffectCategory: Int, Codable, Comparable, CaseIterable {
     }
 }
 
-enum EffectOperator: Int, Codable, Comparable, CaseIterable {
-    static func < (lhs: EffectOperator, rhs: EffectOperator) -> Bool {
+public enum EffectOperator: Int, Codable, Comparable, CaseIterable {
+    public static func < (lhs: EffectOperator, rhs: EffectOperator) -> Bool {
         lhs.rawValue < rhs.rawValue
     }
     
@@ -47,7 +47,7 @@ enum EffectOperator: Int, Codable, Comparable, CaseIterable {
     case postAssign = 7
 }
 
-enum ObjectType: Codable {
+public enum ObjectType: Codable {
     case ship
     case item(Int)
     case charge(Int)
@@ -57,18 +57,18 @@ enum ObjectType: Codable {
     case target
 }
 
-struct Effect: Codable {
-    var `operator`: EffectOperator
-    var penalty: Bool
-    var source: ObjectType
-    var sourceCategory: EffectCategory
-    var sourceAttributeId: Int
+public struct Effect: Codable {
+    public var `operator`: EffectOperator
+    public var penalty: Bool
+    public var source: ObjectType
+    public var sourceCategory: EffectCategory
+    public var sourceAttributeId: Int
 }
 
-struct Attribute: Codable {
-    var baseValue: Double
-    var value: Double?
-    var effects: [Effect]
+public struct Attribute: Codable {
+    public var baseValue: Double
+    public var value: Double?
+    public var effects: [Effect]
 
     init(_ value: Double) {
         self.baseValue = value
@@ -81,7 +81,7 @@ enum SlotType: Codable {
     case high, medium, low, rig, subSystem, service, droneBay, charge, none
 }
 
-struct Slot: Codable {
+public struct Slot: Codable {
     var type: SlotType
     var index: Int?
 
@@ -95,14 +95,14 @@ struct Slot: Codable {
     }
 }
 
-class Item: Codable {
-    var typeId: Int
-    var slot: Slot
-    var charge: Item?
-    var state: EffectCategory
-    var maxState: EffectCategory
-    var attributes: [Int: Attribute]
-    var effects: [Int]
+public class Item: Codable {
+    public var typeId: Int
+    public var slot: Slot
+    public var charge: Item?
+    public var state: EffectCategory
+    public var maxState: EffectCategory
+    public var attributes: [Int: Attribute]
+    public var effects: [Int]
 
     init(typeId: Int, slot: Slot, charge: Item?, state: EffectCategory, maxState: EffectCategory) {
         self.typeId = typeId

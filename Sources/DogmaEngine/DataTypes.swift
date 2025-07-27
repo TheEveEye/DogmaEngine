@@ -117,11 +117,20 @@ public enum EsfSlotType: Codable {
 
 public struct EsfCharge: Codable {
     var typeID: Int
+    
+    public init(typeID: Int) {
+        self.typeID = typeID
+    }
 }
 
 public struct EsfSlot: Codable {
     var type: EsfSlotType
     var index: Int
+    
+    public init(type: EsfSlotType, index: Int) {
+        self.type = type
+        self.index = index
+    }
 }
 
 public struct EsfModule: Codable {
@@ -129,11 +138,23 @@ public struct EsfModule: Codable {
     var slot: EsfSlot
     var state: EsfState
     var charge: EsfCharge?
+    
+    public init(typeID: Int, slot: EsfSlot, state: EsfState, charge: EsfCharge?) {
+        self.typeID = typeID
+        self.slot = slot
+        self.state = state
+        self.charge = charge
+    }
 }
 
 public struct EsfDrone: Codable {
     var typeID: Int
     var state: EsfState
+    
+    public init(typeID: Int, state: EsfState) {
+        self.typeID = typeID
+        self.state = state
+    }
 }
 
 public struct EsfFit {

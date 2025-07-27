@@ -8,21 +8,21 @@
 import Foundation
 
 public struct DamageProfile: Codable {
-    var em: Double
-    var explosive: Double
-    var kinetic: Double
-    var thermal: Double
+    public var em: Double
+    public var explosive: Double
+    public var kinetic: Double
+    public var thermal: Double
 }
 
 public class Ship: Codable {
-    var hull: Item
-    var items: [Item]
-    var skills: [Item]
-    var char: Item
-    var structure: Item
-    var target: Item
+    public var hull: Item
+    public var items: [Item]
+    public var skills: [Item]
+    public var char: Item
+    public var structure: Item
+    public var target: Item
 
-    var damageProfile: DamageProfile
+    public var damageProfile: DamageProfile
 
     public init(shipTypeId: Int) {
         self.hull = Item.newFake(typeId: shipTypeId)
