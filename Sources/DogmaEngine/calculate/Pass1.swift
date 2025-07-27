@@ -29,12 +29,8 @@ extension Item {
 
         // some attributes come from Type info
         let typeInfo = info.getType(typeId)
-        if let mass = typeInfo.mass {
-            setAttribute(attributeId: ATTRIBUTE_MASS_ID, value: mass)
-        }
-        if let capacity = typeInfo.capacity {
-            setAttribute(attributeId: ATTRIBUTE_CAPACITY_ID, value: capacity)
-        }
+        // Note: mass and capacity are not available in the current Type structure
+        // They would need to be retrieved from dogma attributes if needed
         if let volume = typeInfo.volume {
             setAttribute(attributeId: ATTRIBUTE_VOLUME_ID, value: volume)
         }
@@ -51,7 +47,7 @@ public struct PassOne: Pass {
 
         // apply skills
         for (skillId, skillLevel) in info.skills() {
-            var skill = Item.newFake(typeId: skillId)
+            let skill = Item.newFake(typeId: skillId)
             skill.setAttributes(from: info)
             skill.setAttribute(attributeId: ATTRIBUTE_SKILL_LEVEL_ID, value: Double(skillLevel))
             ship.skills.append(skill)

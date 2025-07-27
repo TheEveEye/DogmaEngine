@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol Info {
+public protocol Info {
     func skills() -> [Int: Int]
     func fit() -> EsfFit
 

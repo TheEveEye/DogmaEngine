@@ -144,19 +144,19 @@ extension Item {
     func collectEffects(info: Info, origin: ObjectType, effects: inout [Pass2Effect]) {
         for typeEntry in info.getDogmaEffects(typeId) {
             let dogma = info.getDogmaEffect(typeEntry.effectID)
-            let category = getEffectCategory(dogma.effectCategory)
+            let category = getEffectCategory(dogma.effectCategory ?? 0)
 
             // Update maxState
-            if category > maxState && category <= .overload {
+            if category > maxState && category <= EffectCategory.overload {
                 maxState = category
             }
 
-            if !dogma.modifierInfo.isEmpty {
-                for modifier in dogma.modifierInfo {
+            if let modifierInfo = dogma.modifierInfo, !modifierInfo.isEmpty {
+                for modifier in modifierInfo {
                     // Determine modifier
                     let modFunc = getModifierFunc(
                         modifier.func,
-                        skillTypeID: modifier.skillTypeID.map { $0 },
+                        skillTypeID: nil, // skillTypeID not present in JSON data
                         groupID: modifier.groupID.map { $0 }
                     )
                     guard let mod = modFunc else { continue }
@@ -243,7 +243,7 @@ public struct PassTwo: Pass {
                 continue
             }
 
-            let categoryID = info.getType(sourceTypeID).categoryID
+            let categoryID = info.getType(sourceTypeID).resolvedCategoryID
 
             switch effect.modifier {
             case .ItemModifier:

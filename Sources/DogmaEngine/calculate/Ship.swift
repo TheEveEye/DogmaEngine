@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct DamageProfile: Codable {
+public struct DamageProfile: Codable {
     var em: Double
     var explosive: Double
     var kinetic: Double
     var thermal: Double
 }
 
-class Ship: Codable {
+public class Ship: Codable {
     var hull: Item
     var items: [Item]
     var skills: [Item]
@@ -24,7 +24,7 @@ class Ship: Codable {
 
     var damageProfile: DamageProfile
 
-    init(shipTypeId: Int) {
+    public init(shipTypeId: Int) {
         self.hull = Item.newFake(typeId: shipTypeId)
         self.items = []
         self.skills = []
@@ -39,7 +39,7 @@ protocol Pass {
     static func pass(info: Info, ship: inout Ship)
 }
 
-func calculate(info: Info) -> Ship {
+public func calculate(info: Info) -> Ship {
     var ship = Ship(shipTypeId: info.fit().shipTypeID)
     
     PassOne.pass(info: info, ship: &ship)

@@ -3,7 +3,7 @@
 
 import Foundation
 
-struct OutputCapacitor: Codable {
+public struct OutputCapacitor: Codable {
     var stable: Bool
     var depletesIn: Double
     var capacity: Double
@@ -12,44 +12,44 @@ struct OutputCapacitor: Codable {
     var percentage: Double
 }
 
-struct OutputOffense: Codable {
+public struct OutputOffense: Codable {
     var dps: Double
     var dpsWithReload: Double
     var alpha: Double
     var droneDps: Double
 }
 
-struct OutputDefenseRecharge: Codable {
+public struct OutputDefenseRecharge: Codable {
     var passive: Double
     var shield: Double
     var armor: Double
     var hull: Double
 }
 
-struct OutputDefenseResist: Codable {
+public struct OutputDefenseResist: Codable {
     var em: Double
     var therm: Double
     var kin: Double
     var expl: Double
 }
 
-struct OutputDefenseShield: Codable {
+public struct OutputDefenseShield: Codable {
     var resist: OutputDefenseResist
     var hp: Double
     var recharge: Double
 }
 
-struct OutputDefenseArmor: Codable {
+public struct OutputDefenseArmor: Codable {
     var resist: OutputDefenseResist
     var hp: Double
 }
 
-struct OutputDefenseStructure: Codable {
+public struct OutputDefenseStructure: Codable {
     var resist: OutputDefenseResist
     var hp: Double
 }
 
-struct OutputDefense: Codable {
+public struct OutputDefense: Codable {
     var recharge: OutputDefenseRecharge
     var shield: OutputDefenseShield
     var armor: OutputDefenseArmor
@@ -57,7 +57,7 @@ struct OutputDefense: Codable {
     var ehp: Double
 }
 
-struct OutputTargeting: Codable {
+public struct OutputTargeting: Codable {
     var lockRange: Double
     var sensorStrength: Double
     var scanResolution: Double
@@ -65,7 +65,7 @@ struct OutputTargeting: Codable {
     var maxLockedTargets: Double
 }
 
-struct OutputNavigation: Codable {
+public struct OutputNavigation: Codable {
     var speed: Double
     var mass: Double
     var agility: Double
@@ -73,7 +73,7 @@ struct OutputNavigation: Codable {
     var alignTime: Double
 }
 
-struct OutputDrones: Codable {
+public struct OutputDrones: Codable {
     var dps: Double
     var bandwidthLoad: Double
     var bandwidth: Double
@@ -83,17 +83,17 @@ struct OutputDrones: Codable {
     var capacity: Double
 }
 
-struct OutputCpu: Codable {
+public struct OutputCpu: Codable {
     var free: Double
     var capacity: Double
 }
 
-struct OutputPower: Codable {
+public struct OutputPower: Codable {
     var free: Double
     var capacity: Double
 }
 
-struct OutputSlots: Codable {
+public struct OutputSlots: Codable {
     var hi1: String
     var hi2: String
     var hi3: String
@@ -120,7 +120,7 @@ struct OutputSlots: Codable {
     var lo8: String
 }
 
-struct Output: Codable {
+public struct Output: Codable {
     var capacitor: OutputCapacitor
     var offense: OutputOffense
     var defense: OutputDefense

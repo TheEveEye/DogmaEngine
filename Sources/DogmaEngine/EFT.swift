@@ -141,7 +141,7 @@ func loadEft(info: InfoName, eft: String) throws -> EftFit {
                 let qtyString = String(line[line.index(after: xPos)...])
                 let quantity = Int(qtyString) ?? 0
                 let typeID = info.typeNameToId(typeName)
-                areDrones = areDrones && info.getType(typeID).categoryID == 18
+                areDrones = areDrones && info.getType(typeID).resolvedCategoryID == 18
                 items.append((typeID, quantity))
             }
             if areDrones {

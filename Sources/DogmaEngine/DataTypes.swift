@@ -6,48 +6,79 @@
 
 import Foundation
 
-struct `Type`: Codable {
-    var groupID: Int
-    var categoryID: Int
-    var capacity: Double?
-    var mass: Double?
-    var radius: Double?
-    var volume: Double?
+public struct `Type`: Codable {
+    public var groupID: Int
+    public var categoryID: Int? // This will be resolved from groups
+    public var basePrice: Double?
+    public var graphicID: Int?
+    public var iconID: Int?
+    public var portionSize: Int?
+    public var published: Bool?
+    public var raceID: Int?
+    public var radius: Double?
+    public var volume: Double?
+    // Note: description and name are complex objects in JSON, not included for simplicity
+    
+    // Computed property to get categoryID with fallback
+    public var resolvedCategoryID: Int {
+        return categoryID ?? 0
+    }
 }
 
-struct TypeDogmaAttribute: Codable {
+public struct Group: Codable {
+    var categoryID: Int
+    var anchorable: Bool?
+    var anchored: Bool?
+    var fittableNonSingleton: Bool?
+    var published: Bool?
+    var useBasePrice: Bool?
+}
+
+public struct TypeDogmaAttribute: Codable {
     var attributeID: Int
     var value: Double
 }
 
-struct TypeDogmaEffect: Codable {
+public struct TypeDogmaEffect: Codable {
     var effectID: Int
     var isDefault: Bool
 }
 
-struct DogmaAttribute: Codable {
+public struct TypeDogma: Codable {
+    var dogmaAttributes: [TypeDogmaAttribute]
+    var dogmaEffects: [TypeDogmaEffect]
+}
+
+public struct DogmaAttribute: Codable {
+    var attributeID: Int?
+    var categoryID: Int?
+    var dataType: Int?
     var defaultValue: Double
     var highIsGood: Bool
+    var iconID: Int?
+    var published: Bool?
     var stackable: Bool
+    var unitID: Int?
+    // Note: description, displayNameID, and name are complex/optional, not included for simplicity
 }
 
-enum DogmaEffectModifierInfoDomain: Int, Codable {
-    case itemID = 0
-    case shipID = 1
-    case charID = 2
-    case otherID = 3
-    case structureID = 4
-    case target = 5
-    case targetID = 6
+enum DogmaEffectModifierInfoDomain: String, Codable {
+    case itemID = "itemID"
+    case shipID = "shipID"
+    case charID = "charID"
+    case otherID = "otherID"
+    case structureID = "structureID"
+    case target = "target"
+    case targetID = "targetID"
 }
 
-enum DogmaEffectModifierInfoFunc: Int, Codable {
-    case itemModifier = 0
-    case locationGroupModifier = 1
-    case locationModifier = 2
-    case locationRequiredSkillModifier = 3
-    case ownerRequiredSkillModifier = 4
-    case effectStopper = 5
+enum DogmaEffectModifierInfoFunc: String, Codable {
+    case itemModifier = "ItemModifier"
+    case locationGroupModifier = "LocationGroupModifier"
+    case locationModifier = "LocationModifier"
+    case locationRequiredSkillModifier = "LocationRequiredSkillModifier"
+    case ownerRequiredSkillModifier = "OwnerRequiredSkillModifier"
+    case effectStopper = "EffectStopper"
 }
 
 struct DogmaEffectModifierInfo: Codable {
@@ -57,60 +88,64 @@ struct DogmaEffectModifierInfo: Codable {
     var modifyingAttributeID: Int?
     var operation: Int?
     var groupID: Int?
-    var skillTypeID: Int?
+    // Note: skillTypeID not present in actual JSON, removed
 }
 
-struct DogmaEffect: Codable {
-    var dischargeAttributeID: Int?
-    var durationAttributeID: Int?
-    var effectCategory: Int
+public struct DogmaEffect: Codable {
+    var descriptionID: [String: String]? // Complex object with language keys
+    var disallowAutoRepeat: Bool?
+    var effectCategory: Int?
+    var effectID: Int?
+    var effectName: String?
     var electronicChance: Bool
     var isAssistance: Bool
     var isOffensive: Bool
     var isWarpSafe: Bool
+    var modifierInfo: [DogmaEffectModifierInfo]? // Made optional
     var propulsionChance: Bool
+    var published: Bool?
     var rangeChance: Bool
-    var rangeAttributeID: Int?
-    var falloffAttributeID: Int?
-    var trackingSpeedAttributeID: Int?
-    var fittingUsageChanceAttributeID: Int?
-    var resistanceAttributeID: Int?
-    var modifierInfo: [DogmaEffectModifierInfo]
 }
 
-enum EsfState: Codable {
+public enum EsfState: Codable {
     case passive, online, active, overload
 }
 
-enum EsfSlotType: Codable {
+public enum EsfSlotType: Codable {
     case high, medium, low, rig, subSystem, service
 }
 
-struct EsfCharge: Codable {
+public struct EsfCharge: Codable {
     var typeID: Int
 }
 
-struct EsfSlot: Codable {
+public struct EsfSlot: Codable {
     var type: EsfSlotType
     var index: Int
 }
 
-struct EsfModule: Codable {
+public struct EsfModule: Codable {
     var typeID: Int
     var slot: EsfSlot
     var state: EsfState
     var charge: EsfCharge?
 }
 
-struct EsfDrone: Codable {
+public struct EsfDrone: Codable {
     var typeID: Int
     var state: EsfState
 }
 
-struct EsfFit: Codable {
-    var shipTypeID: Int
-    var modules: [EsfModule]
-    var drones: [EsfDrone]
+public struct EsfFit {
+    public var shipTypeID: Int
+    public var modules: [EsfModule]
+    public var drones: [EsfDrone]
+    
+    public init(shipTypeID: Int, modules: [EsfModule], drones: [EsfDrone]) {
+        self.shipTypeID = shipTypeID
+        self.modules = modules
+        self.drones = drones
+    }
 }
 
 extension DogmaEffectModifierInfoDomain {
