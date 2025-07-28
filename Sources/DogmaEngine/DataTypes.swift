@@ -12,12 +12,13 @@ public struct `Type`: Codable {
     public var basePrice: Double?
     public var graphicID: Int?
     public var iconID: Int?
+    public var mass: Double?
     public var portionSize: Int?
     public var published: Bool?
     public var raceID: Int?
     public var radius: Double?
     public var volume: Double?
-    // Note: description and name are complex objects in JSON, not included for simplicity
+    public var name: [String: String]? // Multi-language name dictionary
     
     // Computed property to get categoryID with fallback
     public var resolvedCategoryID: Int {
@@ -32,6 +33,7 @@ public struct Group: Codable {
     var fittableNonSingleton: Bool?
     var published: Bool?
     var useBasePrice: Bool?
+    var name: [String: String]? // Multi-language name dictionary
 }
 
 public struct TypeDogmaAttribute: Codable {
@@ -59,7 +61,8 @@ public struct DogmaAttribute: Codable {
     var published: Bool?
     var stackable: Bool
     var unitID: Int?
-    // Note: description, displayNameID, and name are complex/optional, not included for simplicity
+    var name: String? // Simple name like "hp"
+    var displayNameID: [String: String]? // Multi-language display names
 }
 
 enum DogmaEffectModifierInfoDomain: String, Codable {

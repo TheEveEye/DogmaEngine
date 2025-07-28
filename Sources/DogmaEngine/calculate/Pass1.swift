@@ -29,8 +29,9 @@ extension Item {
 
         // some attributes come from Type info
         let typeInfo = info.getType(typeId)
-        // Note: mass and capacity are not available in the current Type structure
-        // They would need to be retrieved from dogma attributes if needed
+        if let mass = typeInfo.mass {
+            setAttribute(attributeId: ATTRIBUTE_MASS_ID, value: mass)
+        }
         if let volume = typeInfo.volume {
             setAttribute(attributeId: ATTRIBUTE_VOLUME_ID, value: volume)
         }
