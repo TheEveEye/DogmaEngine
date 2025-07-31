@@ -13,10 +13,11 @@ enum TestHelpers {
     
     /// Get the SDE data directory from KiwiFitting project
     static func getSDEDataDirectory() throws -> URL {
+        print("[TestHelpers] Checking SDE data directory locations...")
         // Try multiple possible paths to find the SDE data
         let possiblePaths = [
             // Direct path from project root
-            "/Users/oskar/Desktop/KiwiFitting/KiwiFitting/KiwiFitting/Resources/sde",
+            "/Users/oskar/Desktop/KiwiFitting Workspace/KiwiFitting/KiwiFitting/Resources/sde",
             // Relative path calculation
             URL(fileURLWithPath: #file)
                 .deletingLastPathComponent() // DogmaEngineTests
@@ -31,13 +32,18 @@ enum TestHelpers {
         ]
         
         for pathString in possiblePaths {
+            print("[TestHelpers] Trying path: \(pathString)")
             let url = URL(fileURLWithPath: pathString)
             var isDirectory: ObjCBool = false
             if FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory) && isDirectory.boolValue {
+                print("[TestHelpers] Found SDE directory at: \(url.path)")
                 return url
             }
         }
-        
+        print("[TestHelpers] SDE directory not found in any of the expected locations:")
+        for path in possiblePaths {
+            print("  - \(path)")
+        }
         throw TestError.missingSDEData("SDE directory not found in any of the expected locations")
     }
     

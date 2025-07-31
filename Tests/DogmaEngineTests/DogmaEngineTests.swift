@@ -3,43 +3,8 @@ import Foundation
 @testable import DogmaEngine
 
 struct DogmaEngineTests {
-    
-    /// Helper to get the SDE data directory from KiwiFitting project
-    private func getSDEDataDirectory() throws -> URL {
-        // Try multiple possible paths to find the SDE data
-        let possiblePaths = [
-            // Direct path from project root
-            "/Users/oskar/Desktop/KiwiFitting/KiwiFitting/KiwiFitting/Resources/sde",
-            // Relative path calculation
-            URL(fileURLWithPath: #file)
-                .deletingLastPathComponent() // DogmaEngineTests
-                .deletingLastPathComponent() // Tests
-                .deletingLastPathComponent() // DogmaEngine
-                .deletingLastPathComponent() // Root
-                .appendingPathComponent("KiwiFitting")
-                .appendingPathComponent("KiwiFitting")
-                .appendingPathComponent("Resources")
-                .appendingPathComponent("sde")
-                .path
-        ]
-        
-        for pathString in possiblePaths {
-            let url = URL(fileURLWithPath: pathString)
-            var isDirectory: ObjCBool = false
-            if FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory) && isDirectory.boolValue {
-                print("✅ Found SDE data at: \(url.path)")
-                return url
-            } else {
-                print("❌ SDE data not found at: \(url.path)")
-            }
-        }
-        
-        throw TestError.missingSDEData("SDE directory not found in any of the expected locations")
-    }
-    
     @Test func testDataLoading() async throws {
-        let sdeDirectory = try getSDEDataDirectory()
-        let data = try Data.new(from: sdeDirectory)
+        let data = try TestHelpers.loadVerifiedSDEData()
         
         // Verify basic data is loaded
         #expect(data.types.count > 0, "Types should be loaded")
@@ -52,8 +17,7 @@ struct DogmaEngineTests {
     }
     
     @Test func testRifterDataIntegrity() async throws {
-        let sdeDirectory = try getSDEDataDirectory()
-        let data = try Data.new(from: sdeDirectory)
+        let data = try TestHelpers.loadVerifiedSDEData()
         
         // Test that Rifter (typeID 587) exists and has expected properties
         guard let rifter = data.types[587] else {
@@ -78,8 +42,7 @@ struct DogmaEngineTests {
     }
     
     @Test func testBasicShipCalculation() async throws {
-        let sdeDirectory = try getSDEDataDirectory()
-        let data = try Data.new(from: sdeDirectory)
+        let data = try TestHelpers.loadVerifiedSDEData()
         
         // Create a basic Rifter fit (no modules)
         let fit = EsfFit(shipTypeID: 587, modules: [], drones: [])
@@ -107,8 +70,7 @@ struct DogmaEngineTests {
     }
     
     @Test func testShipWithModules() async throws {
-        let sdeDirectory = try getSDEDataDirectory()
-        let data = try Data.new(from: sdeDirectory)
+        let data = try TestHelpers.loadVerifiedSDEData()
         
         // Create a Rifter with a simple module (Damage Control II)
         let modules = [
@@ -139,8 +101,7 @@ struct DogmaEngineTests {
     }
     
     @Test func testSkillEffects() async throws {
-        let sdeDirectory = try getSDEDataDirectory()
-        let data = try Data.new(from: sdeDirectory)
+        let data = try TestHelpers.loadVerifiedSDEData()
         
         // Create fits with and without skills
         let fit = EsfFit(shipTypeID: 587, modules: [], drones: [])
@@ -168,8 +129,7 @@ struct DogmaEngineTests {
     }
     
     @Test func testChargeCalculation() async throws {
-        let sdeDirectory = try getSDEDataDirectory()
-        let data = try Data.new(from: sdeDirectory)
+        let data = try TestHelpers.loadVerifiedSDEData()
         
         // Create a Rifter with autocannon and ammunition
         let modules = [
@@ -190,8 +150,7 @@ struct DogmaEngineTests {
     }
     
     @Test func testDamageProfile() async throws {
-        let sdeDirectory = try getSDEDataDirectory()
-        let data = try Data.new(from: sdeDirectory)
+        let data = try TestHelpers.loadVerifiedSDEData()
         
         // Create a Rifter with weapons
         let modules = [
