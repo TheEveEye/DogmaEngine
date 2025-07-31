@@ -93,6 +93,87 @@ enum TestHelpers {
         print("✅ Generated \(allSkills.count) skills at level 5")
         return allSkills
     }
+    
+    /// Standard Rifter fit for consistent testing across all test suites
+    static func getStandardRifterFit() -> StandardRifterFit {
+        return StandardRifterFit()
+    }
+}
+
+/// Standard Rifter fit configuration used across all tests
+struct StandardRifterFit {
+    // Ship
+    let rifterTypeID: Int = 587 // Rifter
+    
+    // High slots (3x 200mm AutoCannon II)
+    let highSlot1TypeID: Int = 2889 // 200mm AutoCannon II
+    let highSlot2TypeID: Int = 2889 // 200mm AutoCannon II  
+    let highSlot3TypeID: Int = 2889 // 200mm AutoCannon II
+    
+    // Mid slots
+    let midSlot1TypeID: Int = 440  // 5MN Microwarpdrive II
+    let midSlot2TypeID: Int = 448  // Warp Scrambler II
+    let midSlot3TypeID: Int = 527  // Stasis Webifier II
+    
+    // Low slots
+    let lowSlot1TypeID: Int = 2048  // Damage Control II
+    let lowSlot2TypeID: Int = 1306  // Multispectrum Coating II
+    let lowSlot3TypeID: Int = 33076 // Small Ancillary Armor Repairer
+    let lowSlot4TypeID: Int = 20347 // 200mm Steel Plates II
+    
+    // Rig slots
+    let rigSlot1TypeID: Int = 31668 // Small Projectile Burst Aerator I
+    let rigSlot2TypeID: Int = 31656 // Small Projectile Ambit Extension I
+    let rigSlot3TypeID: Int = 31406 // Small Semiconductor Memory Cell I
+    
+    /// Get all high slot modules as an array
+    var highSlotModules: [Int] {
+        return [highSlot1TypeID, highSlot2TypeID, highSlot3TypeID]
+    }
+    
+    /// Get all mid slot modules as an array
+    var midSlotModules: [Int] {
+        return [midSlot1TypeID, midSlot2TypeID, midSlot3TypeID]
+    }
+    
+    /// Get all low slot modules as an array
+    var lowSlotModules: [Int] {
+        return [lowSlot1TypeID, lowSlot2TypeID, lowSlot3TypeID, lowSlot4TypeID]
+    }
+    
+    /// Get all rig slot modules as an array
+    var rigSlotModules: [Int] {
+        return [rigSlot1TypeID, rigSlot2TypeID, rigSlot3TypeID]
+    }
+    
+    /// Get all modules as a flat array
+    var allModules: [Int] {
+        return highSlotModules + midSlotModules + lowSlotModules + rigSlotModules
+    }
+    
+    /// Verify all modules exist in the provided data
+    func verifyAllModules(in data: DogmaEngine.Data) throws {
+        let moduleNames = [
+            (rifterTypeID, "Rifter"),
+            (highSlot1TypeID, "200mm AutoCannon II"),
+            (midSlot1TypeID, "5MN Microwarpdrive II"),
+            (midSlot2TypeID, "Warp Scrambler II"),
+            (midSlot3TypeID, "Stasis Webifier II"),
+            (lowSlot1TypeID, "Damage Control II"),
+            (lowSlot2TypeID, "Multispectrum Coating II"),
+            (lowSlot3TypeID, "Small Ancillary Armor Repairer"),
+            (lowSlot4TypeID, "200mm Steel Plates II"),
+            (rigSlot1TypeID, "Small Projectile Burst Aerator I"),
+            (rigSlot2TypeID, "Small Projectile Ambit Extension I"),
+            (rigSlot3TypeID, "Small Semiconductor Memory Cell I")
+        ]
+        
+        for (typeID, expectedName) in moduleNames {
+            try TestHelpers.verifyTypeID(typeID, expectedName: expectedName, in: data)
+        }
+        
+        print("✅ All standard Rifter fit modules verified")
+    }
 }
 
 enum TestError: Error {
