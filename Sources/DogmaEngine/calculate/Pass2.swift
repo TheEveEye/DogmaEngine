@@ -156,7 +156,7 @@ extension Item {
                     // Determine modifier
                     let modFunc = getModifierFunc(
                         modifier.func,
-                        skillTypeID: nil, // skillTypeID not present in JSON data
+                        skillTypeID: modifier.skillTypeID,
                         groupID: modifier.groupID.map { $0 }
                     )
                     guard let mod = modFunc else { continue }

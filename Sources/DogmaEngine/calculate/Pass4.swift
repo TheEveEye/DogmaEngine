@@ -51,8 +51,8 @@ func attributePowerLoad(info: Info, ship: inout Ship) {
 struct PassFour: Pass {
     static func pass(info: Info, ship: inout Ship) {
         attributeCapacitorDepletesIn(info: info, ship: &ship)
-//        attributeCpuLoad(info: info, ship: &ship)
-//        attributePowerLoad(info: info, ship: &ship)
+        attributeCpuLoad(info: info, ship: &ship)
+        attributePowerLoad(info: info, ship: &ship)
     }
 }
 

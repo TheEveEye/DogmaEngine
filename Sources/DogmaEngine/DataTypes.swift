@@ -91,7 +91,7 @@ struct DogmaEffectModifierInfo: Codable {
     var modifyingAttributeID: Int?
     var operation: Int?
     var groupID: Int?
-    // Note: skillTypeID not present in actual JSON, removed
+    var skillTypeID: Int?
 }
 
 public struct DogmaEffect: Codable {
