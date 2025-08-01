@@ -13,11 +13,11 @@ public enum EffectCategory: Int, Codable, Comparable, CaseIterable {
     }
     
     case passive = 0
-    case active = 1
-    case target = 2
-    case area = 3
-    case online = 4
-    case overload = 5
+    case online = 1
+    case active = 2
+    case overload = 3
+    case target = 4
+    case area = 5
     case dungeon = 6
     case system = 7
 
