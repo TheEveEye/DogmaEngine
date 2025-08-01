@@ -11,9 +11,10 @@ struct ResistanceHPDebugTests {
     
     @Test func debugRifterBaseResistances() async throws {
         let data = try TestHelpers.loadVerifiedSDEData()
+        let standardFit = TestHelpers.getStandardRifterFit()
         
         // Test bare Rifter (no modules)
-        let fit = EsfFit(shipTypeID: 587, modules: [], drones: [])
+        let fit = EsfFit(shipTypeID: standardFit.rifterTypeID, modules: [], drones: [])
         let info = SimpleInfo(data: data, fit: fit, skills: [:])
         let ship = calculate(info: info)
         
@@ -55,12 +56,13 @@ struct ResistanceHPDebugTests {
     
     @Test func debugRifterWithDamageControl() async throws {
         let data = try TestHelpers.loadVerifiedSDEData()
+        let standardFit = TestHelpers.getStandardRifterFit()
         
         // Test Rifter with just Damage Control II
         let modules = [
-            EsfModule(typeID: 2048, slot: EsfSlot(type: .low, index: 0), state: .active, charge: nil), // Damage Control II
+            EsfModule(typeID: standardFit.lowSlot1TypeID, slot: EsfSlot(type: .low, index: 0), state: .active, charge: nil), // Damage Control II
         ]
-        let fit = EsfFit(shipTypeID: 587, modules: modules, drones: [])
+        let fit = EsfFit(shipTypeID: standardFit.rifterTypeID, modules: modules, drones: [])
         let info = SimpleInfo(data: data, fit: fit, skills: [:])
         let ship = calculate(info: info)
         

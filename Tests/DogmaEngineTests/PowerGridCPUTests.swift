@@ -18,32 +18,8 @@ struct PowerGridCPUTests {
         // Verify all modules exist in SDE data
         try standardFit.verifyAllModules(in: data)
         
-        // Create modules for the fit
-        let modules = [
-            // High slots - 3x 200mm AutoCannon II
-            EsfModule(typeID: standardFit.highSlot1TypeID, slot: EsfSlot(type: .high, index: 0), state: .active, charge: nil),
-            EsfModule(typeID: standardFit.highSlot2TypeID, slot: EsfSlot(type: .high, index: 1), state: .active, charge: nil),
-            EsfModule(typeID: standardFit.highSlot3TypeID, slot: EsfSlot(type: .high, index: 2), state: .active, charge: nil),
-            
-            // Mid slots
-            EsfModule(typeID: standardFit.midSlot1TypeID, slot: EsfSlot(type: .medium, index: 0), state: .active, charge: nil), // 5MN Microwarpdrive II
-            EsfModule(typeID: standardFit.midSlot2TypeID, slot: EsfSlot(type: .medium, index: 1), state: .active, charge: nil), // Warp Scrambler II
-            EsfModule(typeID: standardFit.midSlot3TypeID, slot: EsfSlot(type: .medium, index: 2), state: .active, charge: nil), // Stasis Webifier II
-            
-            // Low slots
-            EsfModule(typeID: standardFit.lowSlot1TypeID, slot: EsfSlot(type: .low, index: 0), state: .passive, charge: nil), // Damage Control II
-            EsfModule(typeID: standardFit.lowSlot2TypeID, slot: EsfSlot(type: .low, index: 1), state: .passive, charge: nil), // Multispectrum Coating II
-            EsfModule(typeID: standardFit.lowSlot3TypeID, slot: EsfSlot(type: .low, index: 2), state: .passive, charge: nil), // Small Ancillary Armor Repairer
-            EsfModule(typeID: standardFit.lowSlot4TypeID, slot: EsfSlot(type: .low, index: 3), state: .passive, charge: nil), // 200mm Steel Plates II
-            
-            // Rig slots
-            EsfModule(typeID: standardFit.rigSlot1TypeID, slot: EsfSlot(type: .rig, index: 0), state: .passive, charge: nil), // Small Projectile Burst Aerator I
-            EsfModule(typeID: standardFit.rigSlot2TypeID, slot: EsfSlot(type: .rig, index: 1), state: .passive, charge: nil), // Small Projectile Ambit Extension I
-            EsfModule(typeID: standardFit.rigSlot3TypeID, slot: EsfSlot(type: .rig, index: 2), state: .passive, charge: nil), // Small Semiconductor Memory Cell I
-        ]
-        
-        // Create the fit
-        let fit = EsfFit(shipTypeID: standardFit.rifterTypeID, modules: modules, drones: [])
+        // Create fit with standard modules
+        let fit = standardFit.createFit()
         let info = SimpleInfo(data: data, fit: fit, skills: [:]) // No skills for baseline test
         
         // Calculate ship stats

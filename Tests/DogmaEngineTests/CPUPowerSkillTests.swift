@@ -18,31 +18,8 @@ struct CPUPowerSkillTests {
         // Verify all modules exist in the data
         try standardFit.verifyAllModules(in: data)
         
-        // Create a complete fitting with all 13 modules
-        let modules = [
-            // High slots - 3x 200mm AutoCannon II
-            EsfModule(typeID: standardFit.highSlot1TypeID, slot: EsfSlot(type: .high, index: 0), state: .active, charge: nil),
-            EsfModule(typeID: standardFit.highSlot2TypeID, slot: EsfSlot(type: .high, index: 1), state: .active, charge: nil),
-            EsfModule(typeID: standardFit.highSlot3TypeID, slot: EsfSlot(type: .high, index: 2), state: .active, charge: nil),
-            
-            // Mid slots
-            EsfModule(typeID: standardFit.midSlot1TypeID, slot: EsfSlot(type: .medium, index: 0), state: .active, charge: nil), // 5MN Microwarpdrive II
-            EsfModule(typeID: standardFit.midSlot2TypeID, slot: EsfSlot(type: .medium, index: 1), state: .active, charge: nil), // Warp Scrambler II
-            EsfModule(typeID: standardFit.midSlot3TypeID, slot: EsfSlot(type: .medium, index: 2), state: .active, charge: nil), // Stasis Webifier II
-            
-            // Low slots
-            EsfModule(typeID: standardFit.lowSlot1TypeID, slot: EsfSlot(type: .low, index: 0), state: .active, charge: nil), // Damage Control II
-            EsfModule(typeID: standardFit.lowSlot2TypeID, slot: EsfSlot(type: .low, index: 1), state: .active, charge: nil), // Multispectrum Coating II
-            EsfModule(typeID: standardFit.lowSlot3TypeID, slot: EsfSlot(type: .low, index: 2), state: .active, charge: nil), // Small Ancillary Armor Repairer
-            EsfModule(typeID: standardFit.lowSlot4TypeID, slot: EsfSlot(type: .low, index: 3), state: .active, charge: nil), // 200mm Steel Plates II
-            
-            // Rig slots
-            EsfModule(typeID: standardFit.rigSlot1TypeID, slot: EsfSlot(type: .rig, index: 0), state: .active, charge: nil), // Small Projectile Burst Aerator I
-            EsfModule(typeID: standardFit.rigSlot2TypeID, slot: EsfSlot(type: .rig, index: 1), state: .active, charge: nil), // Small Projectile Ambit Extension I
-            EsfModule(typeID: standardFit.rigSlot3TypeID, slot: EsfSlot(type: .rig, index: 2), state: .active, charge: nil), // Small Semiconductor Memory Cell I
-        ]
-        
-        let fit = EsfFit(shipTypeID: standardFit.rifterTypeID, modules: modules, drones: [])
+        // Create fit with standard modules
+        let fit = standardFit.createFit()
         
         // Test 1: No skills
         let infoNoSkills = SimpleInfo(data: data, fit: fit, skills: [:])
@@ -99,7 +76,7 @@ struct CPUPowerSkillTests {
         print("Power Output increase: \(powerOutputWithSkills - powerOutputNoSkills)")
         
         print("=== MODULE COUNT ===")
-        print("Total modules fitted: \(modules.count)")
+        print("Total modules fitted: \(fit.modules.count)")
         
         // CPU Management level 5 should increase CPU output by 25% (5% per level)
         let expectedCpuIncrease = cpuOutputNoSkills * 0.25

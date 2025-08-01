@@ -26,9 +26,10 @@ struct DogmaEngineTests {
         
         #expect(rifter.name?["en"] == "Rifter", "Rifter should have correct name")
         #expect(rifter.groupID > 0, "Rifter should have a valid group ID")
+        let standardFit = TestHelpers.getStandardRifterFit()
         
         // Verify Rifter has dogma attributes
-        if let rifterDogma = data.typeDogma[587] {
+        if let rifterDogma = data.typeDogma[standardFit.rifterTypeID] {
             #expect(rifterDogma.dogmaAttributes.count > 0, "Rifter should have dogma attributes")
             
             // Check for basic ship attributes
@@ -43,16 +44,17 @@ struct DogmaEngineTests {
     
     @Test func testBasicShipCalculation() async throws {
         let data = try TestHelpers.loadVerifiedSDEData()
+        let standardFit = TestHelpers.getStandardRifterFit()
         
         // Create a basic Rifter fit (no modules)
-        let fit = EsfFit(shipTypeID: 587, modules: [], drones: [])
+        let fit = EsfFit(shipTypeID: standardFit.rifterTypeID, modules: [], drones: [])
         let info = SimpleInfo(data: data, fit: fit)
         
         // Calculate ship stats
         let ship = calculate(info: info)
         
         // Verify basic calculation worked
-        #expect(ship.hull.typeId == 587, "Ship should have correct type ID")
+        #expect(ship.hull.typeId == standardFit.rifterTypeID, "Ship should have correct type ID")
         #expect(ship.hull.attributes.count > 0, "Ship should have calculated attributes")
         
         // Test specific attributes exist
@@ -71,12 +73,13 @@ struct DogmaEngineTests {
     
     @Test func testShipWithModules() async throws {
         let data = try TestHelpers.loadVerifiedSDEData()
+        let standardFit = TestHelpers.getStandardRifterFit()
         
         // Create a Rifter with a simple module (Damage Control II)
         let modules = [
-            EsfModule(typeID: 2048, slot: EsfSlot(type: .low, index: 0), state: .passive, charge: nil)
+            EsfModule(typeID: standardFit.lowSlot1TypeID, slot: EsfSlot(type: .low, index: 0), state: .passive, charge: nil)
         ]
-        let fit = EsfFit(shipTypeID: 587, modules: modules, drones: [])
+        let fit = EsfFit(shipTypeID: standardFit.rifterTypeID, modules: modules, drones: [])
         let info = SimpleInfo(data: data, fit: fit)
         
         // Calculate ship stats
@@ -130,12 +133,13 @@ struct DogmaEngineTests {
     
     @Test func testChargeCalculation() async throws {
         let data = try TestHelpers.loadVerifiedSDEData()
+        let standardFit = TestHelpers.getStandardRifterFit()
         
         // Create a Rifter with autocannon and ammunition
         let modules = [
             EsfModule(typeID: 2881, slot: EsfSlot(type: .high, index: 0), state: .active, charge: EsfCharge(typeID: 12608)) // 200mm AutoCannon II with Hail S
         ]
-        let fit = EsfFit(shipTypeID: 587, modules: modules, drones: [])
+        let fit = EsfFit(shipTypeID: standardFit.rifterTypeID, modules: modules, drones: [])
         let info = SimpleInfo(data: data, fit: fit)
         
         // Calculate ship stats
@@ -151,12 +155,13 @@ struct DogmaEngineTests {
     
     @Test func testDamageProfile() async throws {
         let data = try TestHelpers.loadVerifiedSDEData()
+        let standardFit = TestHelpers.getStandardRifterFit()
         
         // Create a Rifter with weapons
         let modules = [
             EsfModule(typeID: 2881, slot: EsfSlot(type: .high, index: 0), state: .active, charge: EsfCharge(typeID: 12608))
         ]
-        let fit = EsfFit(shipTypeID: 587, modules: modules, drones: [])
+        let fit = EsfFit(shipTypeID: standardFit.rifterTypeID, modules: modules, drones: [])
         let info = SimpleInfo(data: data, fit: fit)
         
         // Calculate ship stats

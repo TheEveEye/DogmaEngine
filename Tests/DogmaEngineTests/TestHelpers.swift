@@ -151,6 +151,38 @@ struct StandardRifterFit {
         return highSlotModules + midSlotModules + lowSlotModules + rigSlotModules
     }
     
+    /// Create the complete EsfModule array for the standard fit
+    func createModules() -> [EsfModule] {
+        var modules: [EsfModule] = []
+        
+        // High slots - 3x 200mm AutoCannon II
+        for (index, typeID) in highSlotModules.enumerated() {
+            modules.append(EsfModule(typeID: typeID, slot: EsfSlot(type: .high, index: index), state: .active, charge: nil))
+        }
+        
+        // Mid slots
+        for (index, typeID) in midSlotModules.enumerated() {
+            modules.append(EsfModule(typeID: typeID, slot: EsfSlot(type: .medium, index: index), state: .active, charge: nil))
+        }
+        
+        // Low slots
+        for (index, typeID) in lowSlotModules.enumerated() {
+            modules.append(EsfModule(typeID: typeID, slot: EsfSlot(type: .low, index: index), state: .active, charge: nil))
+        }
+        
+        // Rig slots
+        for (index, typeID) in rigSlotModules.enumerated() {
+            modules.append(EsfModule(typeID: typeID, slot: EsfSlot(type: .rig, index: index), state: .active, charge: nil))
+        }
+        
+        return modules
+    }
+    
+    /// Create a complete EsfFit with all modules
+    func createFit() -> EsfFit {
+        return EsfFit(shipTypeID: rifterTypeID, modules: createModules(), drones: [])
+    }
+    
     /// Verify all modules exist in the provided data
     func verifyAllModules(in data: DogmaEngine.Data) throws {
         let moduleNames = [
