@@ -32,6 +32,10 @@ extension Item {
         if let mass = typeInfo.mass {
             setAttribute(attributeId: ATTRIBUTE_MASS_ID, value: mass)
         }
+        // Some type info attributes include capacity
+        if let capacity = typeInfo.capacity {
+            setAttribute(attributeId: ATTRIBUTE_CAPACITY_ID, value: capacity)
+        }
         if let volume = typeInfo.volume {
             setAttribute(attributeId: ATTRIBUTE_VOLUME_ID, value: volume)
         }

@@ -13,6 +13,8 @@ public struct `Type`: Codable {
     public var graphicID: Int?
     public var iconID: Int?
     public var mass: Double?
+    /// Maximum cargo or internal capacity exposed via dogma
+    public var capacity: Double?
     public var portionSize: Int?
     public var published: Bool?
     public var raceID: Int?

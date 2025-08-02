@@ -7,10 +7,36 @@
 
 import Foundation
 
-public class SimpleInfo: Info {
+public class SimpleInfo: Info, InfoName {
     private let data: Data
     private let esfFit: EsfFit
     private let skillLevels: [Int: Int]
+    
+    // Cached lookup tables for performance
+    private lazy var attributeNameToIdMap: [String: Int] = {
+        var map: [String: Int] = [:]
+        for (id, attribute) in data.dogmaAttributes {
+            if let name = attribute.name {
+                map[name] = id
+            }
+        }
+        return map
+    }()
+    
+    private lazy var typeNameToIdMap: [String: Int] = {
+        var map: [String: Int] = [:]
+        for (id, type) in data.types {
+            // Use English name if available, otherwise first available name
+            if let nameDict = type.name {
+                if let englishName = nameDict["en"] {
+                    map[englishName] = id
+                } else if let firstName = nameDict.values.first {
+                    map[firstName] = id
+                }
+            }
+        }
+        return map
+    }()
     
     public init(data: Data, fit: EsfFit, skills: [Int: Int] = [:]) {
         self.data = data
@@ -82,8 +108,11 @@ public class SimpleInfo: Info {
     }
     
     public func attributeNameToId(_ name: String) -> Int {
-        // For simplicity, return a default ID
-        // In a real implementation, this would map attribute names to IDs
-        return 0
+        return attributeNameToIdMap[name] ?? 0
+    }
+    
+    // InfoName protocol requirement
+    public func typeNameToId(_ name: String) -> Int {
+        return typeNameToIdMap[name] ?? 0
     }
 }
