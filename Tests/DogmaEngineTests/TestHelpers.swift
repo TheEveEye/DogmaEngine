@@ -94,6 +94,26 @@ enum TestHelpers {
         return allSkills
     }
     
+    /// Generate all skills at level 0 for baseline testing
+    static func getAllSkillsAtLevel0(from data: DogmaEngine.Data) -> [Int: Int] {
+        var allSkills: [Int: Int] = [:]
+        
+        // Find all skill groups (category 16 is Skills)
+        let skillGroups = Set(data.groups.compactMap { (groupID, group) in
+            group.categoryID == 16 ? groupID : nil
+        })
+        
+        // Find all published skill types
+        for (typeID, type) in data.types {
+            if skillGroups.contains(type.groupID) && (type.published ?? false) {
+                allSkills[typeID] = 0
+            }
+        }
+        
+        print("✅ Generated \(allSkills.count) skills at level 0")
+        return allSkills
+    }
+    
     /// Standard Rifter fit for consistent testing across all test suites
     static func getStandardRifterFit() -> StandardRifterFit {
         return StandardRifterFit()
