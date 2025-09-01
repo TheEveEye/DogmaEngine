@@ -172,6 +172,7 @@ struct StandardRifterFit {
     }
     
     /// Create the complete EsfModule array for the standard fit
+    /// Charges are omitted; use createModules(ammoTypeID:) to include ammo.
     func createModules() -> [EsfModule] {
         var modules: [EsfModule] = []
         
@@ -197,10 +198,43 @@ struct StandardRifterFit {
         
         return modules
     }
+
+    /// Create modules with optional ammo charge applied to all high slots
+    func createModules(ammoTypeID: Int?) -> [EsfModule] {
+        var modules: [EsfModule] = []
+
+        // High slots - 3x 200mm AutoCannon II (optionally with ammo)
+        for (index, typeID) in highSlotModules.enumerated() {
+            let charge = ammoTypeID.map { EsfCharge(typeID: $0) }
+            modules.append(EsfModule(typeID: typeID, slot: EsfSlot(type: .high, index: index), state: .active, charge: charge))
+        }
+
+        // Mid slots
+        for (index, typeID) in midSlotModules.enumerated() {
+            modules.append(EsfModule(typeID: typeID, slot: EsfSlot(type: .medium, index: index), state: .active, charge: nil))
+        }
+
+        // Low slots
+        for (index, typeID) in lowSlotModules.enumerated() {
+            modules.append(EsfModule(typeID: typeID, slot: EsfSlot(type: .low, index: index), state: .active, charge: nil))
+        }
+
+        // Rig slots
+        for (index, typeID) in rigSlotModules.enumerated() {
+            modules.append(EsfModule(typeID: typeID, slot: EsfSlot(type: .rig, index: index), state: .active, charge: nil))
+        }
+
+        return modules
+    }
     
     /// Create a complete EsfFit with all modules
     func createFit() -> EsfFit {
         return EsfFit(shipTypeID: rifterTypeID, modules: createModules(), drones: [])
+    }
+
+    /// Create a complete EsfFit with specified ammo on high slots
+    func createFitWithAmmo(ammoTypeID: Int) -> EsfFit {
+        return EsfFit(shipTypeID: rifterTypeID, modules: createModules(ammoTypeID: ammoTypeID), drones: [])
     }
     
     /// Verify all modules exist in the provided data
