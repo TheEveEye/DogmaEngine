@@ -29,13 +29,13 @@ public struct `Type`: Codable {
 }
 
 public struct Group: Codable {
-    var categoryID: Int
-    var anchorable: Bool?
-    var anchored: Bool?
-    var fittableNonSingleton: Bool?
-    var published: Bool?
-    var useBasePrice: Bool?
-    var name: [String: String]? // Multi-language name dictionary
+    public var categoryID: Int
+    public var anchorable: Bool?
+    public var anchored: Bool?
+    public var fittableNonSingleton: Bool?
+    public var published: Bool?
+    public var useBasePrice: Bool?
+    public var name: [String: String]? // Multi-language name dictionary
 }
 
 public struct TypeDogmaAttribute: Codable {

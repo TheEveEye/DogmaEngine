@@ -4,132 +4,132 @@
 import Foundation
 
 public struct OutputCapacitor: Codable {
-    var stable: Bool
-    var depletesIn: Double
-    var capacity: Double
-    var recharge: Double
-    var peak: Double
-    var percentage: Double
+    public var stable: Bool
+    public var depletesIn: Double
+    public var capacity: Double
+    public var recharge: Double
+    public var peak: Double
+    public var percentage: Double
 }
 
 public struct OutputOffense: Codable {
-    var dps: Double
-    var dpsWithReload: Double
-    var alpha: Double
-    var droneDps: Double
+    public var dps: Double
+    public var dpsWithReload: Double
+    public var alpha: Double
+    public var droneDps: Double
 }
 
 public struct OutputDefenseRecharge: Codable {
-    var passive: Double
-    var shield: Double
-    var armor: Double
-    var hull: Double
+    public var passive: Double
+    public var shield: Double
+    public var armor: Double
+    public var hull: Double
 }
 
 public struct OutputDefenseResist: Codable {
-    var em: Double
-    var therm: Double
-    var kin: Double
-    var expl: Double
+    public var em: Double
+    public var therm: Double
+    public var kin: Double
+    public var expl: Double
 }
 
 public struct OutputDefenseShield: Codable {
-    var resist: OutputDefenseResist
-    var hp: Double
-    var recharge: Double
+    public var resist: OutputDefenseResist
+    public var hp: Double
+    public var recharge: Double
 }
 
 public struct OutputDefenseArmor: Codable {
-    var resist: OutputDefenseResist
-    var hp: Double
+    public var resist: OutputDefenseResist
+    public var hp: Double
 }
 
 public struct OutputDefenseStructure: Codable {
-    var resist: OutputDefenseResist
-    var hp: Double
+    public var resist: OutputDefenseResist
+    public var hp: Double
 }
 
 public struct OutputDefense: Codable {
-    var recharge: OutputDefenseRecharge
-    var shield: OutputDefenseShield
-    var armor: OutputDefenseArmor
-    var structure: OutputDefenseStructure
-    var ehp: Double
+    public var recharge: OutputDefenseRecharge
+    public var shield: OutputDefenseShield
+    public var armor: OutputDefenseArmor
+    public var structure: OutputDefenseStructure
+    public var ehp: Double
 }
 
 public struct OutputTargeting: Codable {
-    var lockRange: Double
-    var sensorStrength: Double
-    var scanResolution: Double
-    var signatureRadius: Double
-    var maxLockedTargets: Double
+    public var lockRange: Double
+    public var sensorStrength: Double
+    public var scanResolution: Double
+    public var signatureRadius: Double
+    public var maxLockedTargets: Double
 }
 
 public struct OutputNavigation: Codable {
-    var speed: Double
-    var mass: Double
-    var agility: Double
-    var warpSpeed: Double
-    var alignTime: Double
+    public var speed: Double
+    public var mass: Double
+    public var agility: Double
+    public var warpSpeed: Double
+    public var alignTime: Double
 }
 
 public struct OutputDrones: Codable {
-    var dps: Double
-    var bandwidthLoad: Double
-    var bandwidth: Double
-    var range: Double
-    var active: Double
-    var capacityLoad: Double
-    var capacity: Double
+    public var dps: Double
+    public var bandwidthLoad: Double
+    public var bandwidth: Double
+    public var range: Double
+    public var active: Double
+    public var capacityLoad: Double
+    public var capacity: Double
 }
 
 public struct OutputCpu: Codable {
-    var free: Double
-    var capacity: Double
+    public var free: Double
+    public var capacity: Double
 }
 
 public struct OutputPower: Codable {
-    var free: Double
-    var capacity: Double
+    public var free: Double
+    public var capacity: Double
 }
 
 public struct OutputSlots: Codable {
-    var hi1: String
-    var hi2: String
-    var hi3: String
-    var hi4: String
-    var hi5: String
-    var hi6: String
-    var hi7: String
-    var hi8: String
-    var med1: String
-    var med2: String
-    var med3: String
-    var med4: String
-    var med5: String
-    var med6: String
-    var med7: String
-    var med8: String
-    var lo1: String
-    var lo2: String
-    var lo3: String
-    var lo4: String
-    var lo5: String
-    var lo6: String
-    var lo7: String
-    var lo8: String
+    public var hi1: String
+    public var hi2: String
+    public var hi3: String
+    public var hi4: String
+    public var hi5: String
+    public var hi6: String
+    public var hi7: String
+    public var hi8: String
+    public var med1: String
+    public var med2: String
+    public var med3: String
+    public var med4: String
+    public var med5: String
+    public var med6: String
+    public var med7: String
+    public var med8: String
+    public var lo1: String
+    public var lo2: String
+    public var lo3: String
+    public var lo4: String
+    public var lo5: String
+    public var lo6: String
+    public var lo7: String
+    public var lo8: String
 }
 
 public struct Output: Codable {
-    var capacitor: OutputCapacitor
-    var offense: OutputOffense
-    var defense: OutputDefense
-    var targeting: OutputTargeting
-    var navigation: OutputNavigation
-    var drones: OutputDrones
-    var cpu: OutputCpu
-    var power: OutputPower
-    var slots: OutputSlots
+    public var capacitor: OutputCapacitor
+    public var offense: OutputOffense
+    public var defense: OutputDefense
+    public var targeting: OutputTargeting
+    public var navigation: OutputNavigation
+    public var drones: OutputDrones
+    public var cpu: OutputCpu
+    public var power: OutputPower
+    public var slots: OutputSlots
 }
 
 // Helper to get an attribute value (uses .value if set, otherwise defaultValue)
