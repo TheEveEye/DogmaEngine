@@ -88,7 +88,14 @@ public class SimpleInfo: Info, InfoName {
             modifierInfo: [],
             propulsionChance: false,
             published: nil,
-            rangeChance: false
+            rangeChance: false,
+            dischargeAttributeID: nil,
+            durationAttributeID: nil,
+            rangeAttributeID: nil,
+            falloffAttributeID: nil,
+            trackingSpeedAttributeID: nil,
+            fittingUsageChanceAttributeID: nil,
+            resistanceAttributeID: nil
         )
     }
     

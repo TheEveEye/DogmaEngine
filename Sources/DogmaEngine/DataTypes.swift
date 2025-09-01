@@ -97,6 +97,7 @@ struct DogmaEffectModifierInfo: Codable {
 }
 
 public struct DogmaEffect: Codable {
+    // Existing fields
     var descriptionID: [String: String]? // Complex object with language keys
     var disallowAutoRepeat: Bool?
     var effectCategory: Int?
@@ -110,6 +111,13 @@ public struct DogmaEffect: Codable {
     var propulsionChance: Bool
     var published: Bool?
     var rangeChance: Bool
+    var dischargeAttributeID: Int?
+    var durationAttributeID: Int?
+    var rangeAttributeID: Int?
+    var falloffAttributeID: Int?
+    var trackingSpeedAttributeID: Int?
+    var fittingUsageChanceAttributeID: Int?
+    var resistanceAttributeID: Int?
 }
 
 public enum EsfState: Codable {
